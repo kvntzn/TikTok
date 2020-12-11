@@ -9,7 +9,9 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
-const Post = () => {
+const Post = ({post}) => {
+  console.log(post);
+
   const [paused, setPause] = useState(false);
 
   const onPlayPausePress = () => {
@@ -21,7 +23,7 @@ const Post = () => {
       <TouchableWithoutFeedback onPress={onPlayPausePress}>
         <Video
           source={{
-            uri: 'https://static.pexels.com/lib/videos/free-videos.mp4',
+            uri: post.videoUri,
           }}
           style={styles.video}
           onError={(e) => console.log(e)}
@@ -36,47 +38,38 @@ const Post = () => {
           <Image
             style={styles.profilePicture}
             source={{
-              uri:
-                'https://avatars2.githubusercontent.com/u/29770932?s=460&u=6ea35588386c9b72b388f674045f965056e68abe&v=4',
+              uri: post.user.imageUri,
             }}
           />
 
           <View style={styles.iconContainer}>
             <AntDesign name={'heart'} size={40} color="white" />
-            <Text style={styles.statsLabel}>123</Text>
+            <Text style={styles.statsLabel}>{post.likes}</Text>
           </View>
 
           <View style={styles.iconContainer}>
             <FontAwesome name={'commenting'} size={40} color="white" />
-            <Text style={styles.statsLabel}>123</Text>
+            <Text style={styles.statsLabel}>{post.comments}</Text>
           </View>
 
           <View style={styles.iconContainer}>
             <Fontisto name={'share-a'} size={35} color="white" />
-            <Text style={styles.statsLabel}>123</Text>
+            <Text style={styles.statsLabel}>{post.shares}</Text>
           </View>
         </View>
 
         <View style={styles.bottomContainer}>
           <View>
-            <Text style={styles.userName}>@kvntzn</Text>
-            <Text style={styles.description}>
-              crashing waves, summer vacation pls :)
-            </Text>
+            <Text style={styles.userName}>{post.user.username}</Text>
+            <Text style={styles.description}>{post.description}</Text>
 
             <View style={styles.songRow}>
               <Entypo name={'beamed-note'} size={24} color="white" />
-              <Text style={styles.songName}>RN - Tiktok app</Text>
+              <Text style={styles.songName}>{post.songName}</Text>
             </View>
           </View>
-          
-          <Image
-            style={styles.songImage}
-            source={{
-              uri:
-                'https://avatars2.githubusercontent.com/u/29770932?s=460&u=6ea35588386c9b72b388f674045f965056e68abe&v=4',
-            }}
-          />
+
+          <Image style={styles.songImage} source={{uri: post.songImage}} />
         </View>
       </View>
     </View>
