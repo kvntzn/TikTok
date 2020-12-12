@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableWithoutFeedback, Image} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableWithoutFeedback,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 import Video from 'react-native-video';
 import styles from './styles';
@@ -10,7 +16,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 
 const Post = ({post}) => {
-  console.log(post);
+  const [newPost, setNewPost] = useState(post);
+  const [isLiked, setIsLiked] = useState(false);
 
   const [paused, setPause] = useState(false);
 
@@ -18,12 +25,21 @@ const Post = ({post}) => {
     setPause(!paused);
   };
 
+  const onLikePress = () => {
+    const likesToAdd = isLiked ? -1 : 1;
+    setNewPost({
+      ...newPost,
+      likes: newPost.likes + likesToAdd,
+    });
+    setIsLiked(!isLiked);
+  };
+
   return (
     <View style={styles.container}>
       <TouchableWithoutFeedback onPress={onPlayPausePress}>
         <Video
           source={{
-            uri: post.videoUri,
+            uri: newPost.videoUri,
           }}
           style={styles.video}
           onError={(e) => console.log(e)}
@@ -38,38 +54,38 @@ const Post = ({post}) => {
           <Image
             style={styles.profilePicture}
             source={{
-              uri: post.user.imageUri,
+              uri: newPost.user.imageUri,
             }}
           />
 
-          <View style={styles.iconContainer}>
-            <AntDesign name={'heart'} size={40} color="white" />
-            <Text style={styles.statsLabel}>{post.likes}</Text>
-          </View>
+          <TouchableOpacity style={styles.iconContainer} onPress={onLikePress}>
+            <AntDesign name={'heart'} size={40} color={isLiked ? 'red' : 'white'} />
+            <Text style={styles.statsLabel}>{newPost.likes}</Text>
+          </TouchableOpacity>
 
           <View style={styles.iconContainer}>
             <FontAwesome name={'commenting'} size={40} color="white" />
-            <Text style={styles.statsLabel}>{post.comments}</Text>
+            <Text style={styles.statsLabel}>{newPost.comments}</Text>
           </View>
 
           <View style={styles.iconContainer}>
             <Fontisto name={'share-a'} size={35} color="white" />
-            <Text style={styles.statsLabel}>{post.shares}</Text>
+            <Text style={styles.statsLabel}>{newPost.shares}</Text>
           </View>
         </View>
 
         <View style={styles.bottomContainer}>
           <View>
-            <Text style={styles.userName}>{post.user.username}</Text>
-            <Text style={styles.description}>{post.description}</Text>
+            <Text style={styles.userName}>{newPost.user.username}</Text>
+            <Text style={styles.description}>{newPost.description}</Text>
 
             <View style={styles.songRow}>
               <Entypo name={'beamed-note'} size={24} color="white" />
-              <Text style={styles.songName}>{post.songName}</Text>
+              <Text style={styles.songName}>{newPost.songName}</Text>
             </View>
           </View>
 
-          <Image style={styles.songImage} source={{uri: post.songImage}} />
+          <Image style={styles.songImage} source={{uri: newPost.songImage}} />
         </View>
       </View>
     </View>

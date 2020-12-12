@@ -12,7 +12,7 @@ const post1 =  {
   videoUri: 'https://static.pexels.com/lib/videos/free-videos.mp4',
   description: 'i think its summer',
   songName: 'Astronomia - Coffin dance',
-  songImage: 'https://avatars2.githubusercontent.com/u/29770932?s=460&u=6ea35588386c9b72b388f674045f965056e68abe&v=4',
+  songImage: 'https://i.ytimg.com/vi/iLBBRuVDOo4/maxresdefault.jpg',
   likes: 123,
   comments: 12,
   shares: 44
